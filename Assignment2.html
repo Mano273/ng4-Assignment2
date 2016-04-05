@@ -1,0 +1,108 @@
+<html>
+<head>
+	<title>
+		Custom Service Example 
+	</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<!--Angular-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+
+	<script type="text/javascript">
+var module = angular.module('app', []);
+ 
+module.service('DetailService', function () {
+    
+   
+    var contacts=[
+                {
+                    name: 'Mrinal',
+                    age: '23',
+                    employeeid: '23456',
+                    salary: '32000'
+                },
+
+                {
+                    name: 'Harry',
+                    age: '26',
+                    employeeid: '663456',
+                    salary: '32300'
+                }
+                ];
+    this.saveDetail= function (contact){
+        contacts.push(contact);
+
+    }
+    this.list = function () {
+        return contacts;
+    }
+            
+        
+});
+ 
+module.controller('DetailController', function ($scope, DetailService) {
+ 
+    $scope.contacts=DetailService.list();
+    $scope.saveContact= function() {
+        DetailService.saveDetail($scope.newcontact);
+        $scope.newcontact={};
+        
+    }
+
+
+})
+
+	</script>
+</head>
+<body ng-app="app">
+	<div ng-controller="DetailController">
+        <form>
+            <table class="table">
+                <tr> 
+                    <td><label>Name</label></td>
+                    <td><input type="text" name="name" ng-model="newcontact.name"/></td>
+                </tr>
+                 <tr> 
+                    <td><label>Age</label></td>
+                    <td><input type="text" name="email" ng-model="newcontact.age"/></td>
+                </tr>
+                 <tr> 
+                    <td><label>Employee Id</label></td>
+                    <td><input type="text" name="phone" ng-model="newcontact.employeeid"/></td>
+                </tr>
+                 <tr> 
+                    <td><label>Salary</label></td>
+                    <td><input type="text" name="email" ng-model="newcontact.salary"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                 <tr>
+                    <td colspan="2"><input type="button" value="Save" ng-click="saveContact()" /></td>
+                    
+                </tr>
+
+           
+            </table>
+        </form>
+
+        <table class="table table-bordered">
+            <tr ng-repeat="cont in contacts">
+                <td>{{cont.name}}</td>
+                <td>{{cont.age}}</td>
+                <td>{{cont.employeeid}}</td>
+                <td>{{cont.salary|currency}}</td>
+            </tr>
+        </table>
+   
+</div>
+
+</body>
+</html>
